@@ -1,1 +1,260 @@
-/* Formula Fit styles scaffold. UI tokens and components are added in a later phase. */
+/* ==========================================================================
+   Formula Fit — Design tokens (§2.1 / §2.2) + global base styles
+   ========================================================================== */
+
+:root {
+  /* Superficies */
+  --bg-base:      #0B0F14;
+  --bg-surface:   #151B23;
+  --bg-elevated:  #1E2730;
+  --border:       #2A3540;
+
+  /* Marca / Acentos */
+  --accent:       #00E5A0;
+  --accent-press: #00B37E;
+  --accent-alt:   #4DA3FF;
+  --warn:         #FF5C5C;
+
+  /* Texto */
+  --text-hi:      #F2F5F7;
+  --text-mid:     #AEB9C4;
+  --text-low:     #6B7886;
+
+  /* Escala de espaciado (grid 8px) */
+  --s1: 4px;
+  --s2: 8px;
+  --s3: 16px;
+  --s4: 24px;
+  --s5: 32px;
+  --s6: 48px;
+  --s7: 64px;
+
+  --radius: 14px;
+  --maxw: 1120px;
+
+  /* Tipografía */
+  --font-ui: 'Inter', system-ui, sans-serif;
+  --font-display: 'Space Grotesk', var(--font-ui);
+
+  /* Type scale 1.200 */
+  --fs-caption: 0.8rem;   /* 12.8px */
+  --fs-body:    1rem;     /* 16px */
+  --fs-h4:      1.2rem;   /* 19.2px */
+  --fs-h3:      1.4375rem;/* 23px */
+  --fs-h2:      1.725rem; /* 27.6px */
+  --fs-h1:      2.075rem; /* 33.2px */
+  --lh-body: 1.5;
+}
+
+/* --------------------------------------------------------------------------
+   Reset & global base
+   -------------------------------------------------------------------------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-ui);
+  font-size: var(--fs-body);
+  font-weight: 400;
+  line-height: var(--lh-body);
+  color: var(--text-mid);
+  background-color: var(--bg-base);
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0 0 var(--s2);
+  color: var(--text-hi);
+  line-height: 1.25;
+}
+
+h1 {
+  font-family: var(--font-display);
+  font-size: var(--fs-h1);
+  font-weight: 700;
+}
+
+h2 {
+  font-size: var(--fs-h2);
+  font-weight: 600;
+}
+
+h3 {
+  font-size: var(--fs-h3);
+  font-weight: 600;
+}
+
+h4 {
+  font-size: var(--fs-h4);
+  font-weight: 600;
+}
+
+p {
+  margin: 0 0 var(--s3);
+  max-width: 65ch;
+}
+
+a {
+  color: var(--accent-alt);
+  text-underline-offset: 0.15em;
+}
+
+a:hover {
+  color: var(--text-hi);
+}
+
+label {
+  display: block;
+  margin-bottom: var(--s1);
+  font-size: var(--fs-caption);
+  font-weight: 500;
+  color: var(--text-hi);
+}
+
+input,
+button,
+select,
+textarea {
+  font: inherit;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="text"],
+input[type="number"],
+select,
+textarea {
+  width: 100%;
+  min-height: var(--s6);
+  padding: var(--s2) var(--s3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text-hi);
+  background-color: var(--bg-surface);
+}
+
+input::placeholder {
+  color: var(--text-low);
+}
+
+input:focus-visible,
+button:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--accent-alt);
+  outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   Typography utilities
+   -------------------------------------------------------------------------- */
+
+.eyebrow,
+.step-label {
+  margin: 0 0 var(--s2);
+  font-size: var(--fs-caption);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-low);
+}
+
+/* --------------------------------------------------------------------------
+   Button hierarchy — primary / secondary / tertiary (target ≥ 48px)
+   -------------------------------------------------------------------------- */
+
+button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s2);
+  min-height: var(--s6);
+  min-width: var(--s6);
+  padding: var(--s2) var(--s4);
+  border: none;
+  border-radius: var(--radius);
+  font-weight: 600;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.button-primary {
+  background-color: var(--accent);
+  color: var(--bg-base);
+}
+
+.button-primary:hover:not(:disabled) {
+  background-color: #33eab3;
+}
+
+.button-primary:active:not(:disabled) {
+  background-color: var(--accent-press);
+}
+
+.button-secondary {
+  border: 1px solid var(--border);
+  color: var(--text-hi);
+  background-color: transparent;
+}
+
+.button-secondary:hover:not(:disabled) {
+  background-color: var(--bg-elevated);
+  border-color: var(--text-low);
+}
+
+.button-secondary:active:not(:disabled) {
+  background-color: var(--bg-surface);
+}
+
+.button-tertiary {
+  min-width: auto;
+  padding: var(--s2) var(--s3);
+  color: var(--accent-alt);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  background-color: transparent;
+}
+
+.button-tertiary:hover:not(:disabled) {
+  color: var(--text-hi);
+}
+
+.button-tertiary:active:not(:disabled) {
+  color: var(--accent);
+}
+
+/* --------------------------------------------------------------------------
+   SPA view utilities
+   -------------------------------------------------------------------------- */
+
+.view.hidden,
+.confirmation-overlay.hidden {
+  display: none;
+}
