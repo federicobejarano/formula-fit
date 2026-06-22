@@ -92,21 +92,24 @@
       </section>
 
       <section id="quiz" class="view hidden" aria-labelledby="quiz-title">
-        <div class="view-container">
-          <p class="step-label">Paso 1 de 4</p>
-          <progress value="25" max="100">25%</progress>
-          <h2 id="quiz-title">Contanos tu objetivo principal</h2>
-          <p>Este bloque queda como placeholder para las tarjetas del wizard.</p>
-
-          <div class="option-grid" aria-label="Opciones de objetivo">
-            <button type="button" class="option-card">Hipertrofia</button>
-            <button type="button" class="option-card">Fuerza y Potencia</button>
-            <button type="button" class="option-card">Recuperacion</button>
+        <div class="view-container quiz-container">
+          <div class="quiz-progress">
+            <p id="step-label" class="step-label">Paso 1 de 4</p>
+            <progress id="quiz-progress-bar" value="25" max="100">25%</progress>
           </div>
 
-          <div class="view-actions">
-            <button type="button" data-target="login">Atras</button>
-            <button type="button" class="button-primary" data-target="loader">Formular mi Stack</button>
+          <div class="quiz-content">
+            <h2 id="quiz-title">¿Cuál es tu objetivo principal?</h2>
+            <p id="quiz-subtitle" class="quiz-subtitle">Elegí el que mejor represente tu meta actual.</p>
+
+            <div id="option-grid" class="option-grid" role="radiogroup" aria-labelledby="quiz-title">
+              <!-- Tarjetas renderizadas dinámicamente por app.js -->
+            </div>
+          </div>
+
+          <div class="view-actions quiz-actions">
+            <button type="button" id="quiz-btn-back" class="button-secondary">Atrás</button>
+            <button type="button" id="quiz-btn-next" class="button-primary" disabled>Siguiente</button>
           </div>
         </div>
       </section>
