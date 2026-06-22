@@ -3,7 +3,11 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Formula Fit: prototipo D2C de stacks personalizados en modo simulacion.">
     <title>Formula Fit</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="assets/favicon.png">
     <link rel="stylesheet" href="css/styles.css">
     <script defer src="js/data.js"></script>
@@ -11,21 +15,180 @@
     <script defer src="js/app.js"></script>
   </head>
   <body>
-    <template id="brand-logo-template">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" aria-hidden="true" focusable="false">
-        <rect width="240" height="240" rx="24" fill="#00E5A0"></rect>
-        <g fill="#0F172A" stroke="#0F172A" stroke-linejoin="round">
-          <polygon points="120,45 185,82.5 185,157.5 120,195 55,157.5 55,82.5" fill="none" stroke-width="12"></polygon>
-          <circle cx="120" cy="45" r="10" stroke="none"></circle>
-          <circle cx="185" cy="157.5" r="10" stroke="none"></circle>
-          <circle cx="55" cy="157.5" r="10" stroke="none"></circle>
-          <line x1="85" y1="120" x2="155" y2="120" stroke-width="12" stroke-linecap="round"></line>
-          <rect x="80" y="95" width="12" height="50" rx="3" stroke="none"></rect>
-          <rect x="148" y="95" width="12" height="50" rx="3" stroke="none"></rect>
-          <rect x="65" y="102.5" width="10" height="35" rx="3" stroke="none"></rect>
-          <rect x="165" y="102.5" width="10" height="35" rx="3" stroke="none"></rect>
-        </g>
-      </svg>
-    </template>
+    <div class="simulation-badge" aria-label="Modo Simulacion">Modo Simulacion</div>
+
+    <header class="app-header" aria-label="Navegacion principal">
+      <button class="brand" type="button" data-target="login" aria-label="Formula Fit">
+        <span class="brand-logo" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" focusable="false">
+            <rect width="240" height="240" rx="24" fill="#00E5A0"></rect>
+            <g fill="#0F172A" stroke="#0F172A" stroke-linejoin="round">
+              <polygon points="120,45 185,82.5 185,157.5 120,195 55,157.5 55,82.5" fill="none" stroke-width="12"></polygon>
+              <circle cx="120" cy="45" r="10" stroke="none"></circle>
+              <circle cx="185" cy="157.5" r="10" stroke="none"></circle>
+              <circle cx="55" cy="157.5" r="10" stroke="none"></circle>
+              <line x1="85" y1="120" x2="155" y2="120" stroke-width="12" stroke-linecap="round"></line>
+              <rect x="80" y="95" width="12" height="50" rx="3" stroke="none"></rect>
+              <rect x="148" y="95" width="12" height="50" rx="3" stroke="none"></rect>
+              <rect x="65" y="102.5" width="10" height="35" rx="3" stroke="none"></rect>
+              <rect x="165" y="102.5" width="10" height="35" rx="3" stroke="none"></rect>
+            </g>
+          </svg>
+        </span>
+        <span>Formula Fit</span>
+      </button>
+
+      <nav class="view-nav" aria-label="Accesos temporales del skeleton">
+        <button type="button" data-target="login">Login</button>
+        <button type="button" data-target="quiz">Quiz</button>
+        <button type="button" data-target="loader">Loader</button>
+        <button type="button" data-target="resultados">Resultados</button>
+        <button type="button" data-target="carrito">Carrito</button>
+      </nav>
+    </header>
+
+    <main id="app" class="app-shell">
+      <section id="login" class="view active" aria-labelledby="login-title">
+        <div class="login-panel">
+          <div class="login-card">
+            <div class="brand-lockup">
+              <span class="brand-logo brand-logo-large" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" focusable="false">
+                  <rect width="240" height="240" rx="24" fill="#00E5A0"></rect>
+                  <g fill="#0F172A" stroke="#0F172A" stroke-linejoin="round">
+                    <polygon points="120,45 185,82.5 185,157.5 120,195 55,157.5 55,82.5" fill="none" stroke-width="12"></polygon>
+                    <circle cx="120" cy="45" r="10" stroke="none"></circle>
+                    <circle cx="185" cy="157.5" r="10" stroke="none"></circle>
+                    <circle cx="55" cy="157.5" r="10" stroke="none"></circle>
+                    <line x1="85" y1="120" x2="155" y2="120" stroke-width="12" stroke-linecap="round"></line>
+                    <rect x="80" y="95" width="12" height="50" rx="3" stroke="none"></rect>
+                    <rect x="148" y="95" width="12" height="50" rx="3" stroke="none"></rect>
+                    <rect x="65" y="102.5" width="10" height="35" rx="3" stroke="none"></rect>
+                    <rect x="165" y="102.5" width="10" height="35" rx="3" stroke="none"></rect>
+                  </g>
+                </svg>
+              </span>
+              <div>
+                <p class="eyebrow">D2C Performance Stacks</p>
+                <h1 id="login-title">Formula Fit</h1>
+              </div>
+            </div>
+            <p>Ingresá para formular un stack personalizado según tu objetivo, nivel y rutina.</p>
+
+            <form id="login-form" class="form-stack">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" autocomplete="email" required>
+
+              <label for="password">Password</label>
+              <input id="password" name="password" type="password" autocomplete="current-password" required>
+
+              <button type="submit" class="button-primary" data-target="quiz">Ingresar</button>
+            </form>
+          </div>
+        </div>
+        <aside class="login-hero" aria-label="Formula Fit performance lab">
+          <img src="assets/hero-login.png" alt="Atleta entrenando en un laboratorio de performance">
+        </aside>
+      </section>
+
+      <section id="quiz" class="view hidden" aria-labelledby="quiz-title">
+        <div class="view-container">
+          <p class="step-label">Paso 1 de 4</p>
+          <progress value="25" max="100">25%</progress>
+          <h2 id="quiz-title">Contanos tu objetivo principal</h2>
+          <p>Este bloque queda como placeholder para las tarjetas del wizard.</p>
+
+          <div class="option-grid" aria-label="Opciones de objetivo">
+            <button type="button" class="option-card">Hipertrofia</button>
+            <button type="button" class="option-card">Fuerza y Potencia</button>
+            <button type="button" class="option-card">Recuperacion</button>
+          </div>
+
+          <div class="view-actions">
+            <button type="button" data-target="login">Atras</button>
+            <button type="button" class="button-primary" data-target="loader">Formular mi Stack</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="loader" class="view hidden" aria-labelledby="loader-title" aria-live="polite">
+        <div class="loader-panel">
+          <svg class="loader-mark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
+            <circle cx="60" cy="60" r="44" fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-dasharray="120 80"></circle>
+            <circle cx="60" cy="60" r="8" fill="currentColor"></circle>
+          </svg>
+          <h2 id="loader-title">Analizando metricas...</h2>
+          <p>Estamos ensamblando una formula alineada a tu perfil.</p>
+          <button type="button" class="button-primary" data-target="resultados">Ver resultados</button>
+        </div>
+      </section>
+
+      <section id="resultados" class="view hidden" aria-labelledby="resultados-title">
+        <div class="view-container">
+          <header class="stack-header">
+            <p class="eyebrow">Stack sugerido</p>
+            <h2 id="resultados-title">Stack Formula Fit</h2>
+            <p class="profile-chip">Objetivo del perfil</p>
+          </header>
+
+          <article class="callout">
+            <h3>Justificacion</h3>
+            <p>Placeholder para explicar por que esta combinacion responde al perfil del atleta.</p>
+          </article>
+
+          <div class="product-grid" aria-label="Productos recomendados">
+            <article class="product-card">
+              <img src="productos/cmh.png" alt="Creatine Monohydrate">
+              <h3>Creatine Monohydrate</h3>
+              <p>Rendimiento y Fuerza</p>
+              <p>$24.99</p>
+              <button type="button">Quitar</button>
+            </article>
+          </div>
+
+          <aside class="total-panel" aria-label="Resumen del stack">
+            <p>Total estimado</p>
+            <strong>$24.99</strong>
+            <button type="button" class="button-primary" data-target="carrito">Anadir al Carrito</button>
+          </aside>
+        </div>
+      </section>
+
+      <section id="carrito" class="view hidden" aria-labelledby="carrito-title">
+        <div class="view-container checkout-container">
+          <h2 id="carrito-title">Checkout</h2>
+          <p>Revisa tu stack personalizado antes de confirmar el pedido simulado.</p>
+
+          <div class="cart-lines" aria-label="Lineas del carrito">
+            <article class="cart-line">
+              <img src="productos/cmh.png" alt="Creatine Monohydrate">
+              <div>
+                <h3>Creatine Monohydrate</h3>
+                <p>Cantidad: 1</p>
+              </div>
+              <strong>$24.99</strong>
+            </article>
+          </div>
+
+          <aside class="checkout-summary">
+            <p>Subtotal: $24.99</p>
+            <p>Total: $24.99</p>
+            <button type="button" class="button-primary" data-open-confirmation>Confirmar Pedido</button>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <div id="confirmation-overlay" class="confirmation-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="confirmation-title">
+      <div class="confirmation-modal">
+        <svg class="success-check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
+          <circle cx="60" cy="60" r="48" fill="none" stroke="currentColor" stroke-width="8"></circle>
+          <path d="M34 62 L52 80 L88 40" fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+        <h2 id="confirmation-title">Pedido confirmado</h2>
+        <p>Modo Simulacion. Tu Pedido_Stack_Personalizado queda listo para render dinamico en fases posteriores.</p>
+        <button type="button" data-close-confirmation>Cerrar</button>
+      </div>
+    </div>
   </body>
 </html>
