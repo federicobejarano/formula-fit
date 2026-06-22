@@ -26,3 +26,35 @@ function navigateTo(viewId) {
     targetView.classList.add('active');
   }
 }
+
+/**
+ * Handles the login form submission.
+ * Saves email to appState and optionally to localStorage, then navigates to quiz.
+ * @param {Event} e - The submit event.
+ */
+function handleLoginSubmit(e) {
+  e.preventDefault();
+  const emailInput = document.getElementById('email');
+  const email = emailInput.value.trim();
+
+  appState.usuario = { email };
+
+  localStorage.setItem('formulafit_email', email);
+
+  navigateTo('quiz');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const loginForm = document.getElementById('login-form');
+  if (loginForm) {
+    loginForm.addEventListener('submit', handleLoginSubmit);
+  }
+
+  const savedEmail = localStorage.getItem('formulafit_email');
+  if (savedEmail) {
+    const emailInput = document.getElementById('email');
+    if (emailInput) {
+      emailInput.value = savedEmail;
+    }
+  }
+});
