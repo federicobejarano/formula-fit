@@ -62,17 +62,17 @@ La interacción con la IA se organizó en una cadena de tres prompts reutilizabl
 ## Modelos de IA Utilizados
 
 **1. Definición de la Idea a Desarrollar**
-- Ejecuté un [`docs/prompts/00-gemini.md`](prompt inicial) en **Gemini 3.1 Pro** solicitando palabras clave (en idioma inglés) relacionadas a **E-Commerce** con el objetivo de conocer en qué consiste la innovación en este contexo, además de algunos casos de éxito reales.
-- Buscando las palabras claves sugeridas por Gemini, recopilé 17 artículos que abordan el tema "innovación en E-Commerce" desde diversas perspectivas. Estos artículos fueron procesados con **NotebookLM** para obtener un resumen que incluya "tipos de innovación en e-commerce" y "casos de éxito conocidos". En base a este resumen, busqué un tipo de innovación que se ajustara a la características de la aplicación final: un **sitio web con lógica y datos simulados**.
+- Ejecuté un [prompt inicial](docs/prompts/00-gemini.md) en **Gemini 3.1 Pro** solicitando palabras clave (en idioma inglés) relacionadas a **E-Commerce** con el objetivo de conocer en qué consiste la innovación en este contexo, además de algunos casos de éxito reales.
+- Con las palabras clave sugeridas por Gemini, recopilé 17 artículos que abordan el tema "innovación en E-Commerce" desde diversas perspectivas. Estos artículos fueron procesados con **NotebookLM** para obtener un resumen que incluya "tipos de innovación en e-commerce" y "casos de éxito conocidos". En base a este resumen, busqué un tipo de innovación que se ajustara a la características de la aplicación final: un **sitio web con lógica y datos simulados**.
 - Una vez identificado el tipo de innovación **D2C (Direct-to-Consumer) hiper-personalizado** como apropiado para la consigna, apliqué el modelo a mi situación personal actual: la de buscar suplementos deportivos acordes a mis necesidades y objetivos físicos.
 
 **2. Refinamiento de la Solución**
-- El primer obstáculo fue que no sabía cómo un sitio web simulado resolvería sugerencias de paquetes de productos en base a elecciones del usuario. Para ello, [`docs/prompts/solicitar_logica_sugerencias.md`](ejecuté un prompt) en **Gemini 3.1 Pro** solicitando elaborar un documento descriptivo de cómo un sitio web con flujos y datos simulados proporcionaría diversas opciones según los datos ingresados.
-- Basándome en esta [`docs/logica_de_sugerencias.md`](solución generada por Gemini), solicité al mismo modelo la definición de la **[`docs/registro.md`](estructura principal)** de tipo Registro, con su camplo Clave continente. Luego adapté la solución propuesta por Gemini para ajustarlo a las convenciones de Cátedra.
-- Luego, utilicé Cursor para solicitar la definición de los **[`docs/arquitectura_tecnica.md`](requerimientos técnicos)** utilizando el modelo **Claude Opus 4.8**. Para ello me basé en:
-    - La lógica de sugerencias generada por Gemini
-    - Las [`docs/uxui_best_practices.md`](buenas prácticas) de diseño UX/UI para E-commerce, documento generado con **NotebookLM** utilizando bibliografía autorizada de diseño UX/UI 
+- El primer obstáculo fue que no sabía cómo resolver sugerencias diversas de productos en base a datos introducidos por el usuario en el contexto de un sitio web simulado. Para ello, [ejecuté un prompt](docs/prompts/solicitar_logica_sugerencias.md) en **Gemini 3.1 Pro** solicitando elaborar un documento descriptivo de cómo un sitio web de dichas características (esto es, con flujos y datos simulados) proporcionaría las opciones correspondientes de forma verosímil.
+- Basándome en esta [solución generada por Gemini](docs/logica_de_sugerencias.md), solicité al mismo modelo la definición de la **[`docs/registro.md`](estructura principal)** de tipo Registro, con su camplo Clave continente. Luego adapté la solución propuesta por Gemini para ajustarlo a las convenciones de Cátedra.
+- A continuación, utilicé Cursor para solicitar la definición de los **[requerimientos técnicos](docs/arquitectura_tecnica.md)** utilizando el modelo **Claude Opus 4.8**. Para ello me basé en:
+    - La lógica de sugerencias simulada propuesta por Gemini
+    - Las [buenas prácticas](docs/uxui_best_practices.md) de diseño UX/UI para E-commerce, documento generado con **NotebookLM** utilizando bibliografía autorizada de diseño UX/UI.
 
 **3. Planificación y Ejecución**
-- Basándome en la definición técnica generada por Claude 4.8, solicité al mismo modelo la generación del plan de desarrollo mediante el [`docs/prompts/planificacion.md`](prompt correspondiente)
-- Por último, utilicé un [`docs/prompts/ejecucion_actividad.md`](prompt genérico) para la ejecución de las actividades de desarrollo definidas por Claude 4.8 en el paso anterior.
+- Basándome en la definición técnica generada por Claude 4.8, solicité al mismo modelo la generación del plan de desarrollo mediante el [prompt correspondiente](docs/prompts/planificacion.md)
+- Por último, utilicé un [prompt genérico](docs/prompts/ejecucion_actividad.md) para la ejecución de las actividades de desarrollo definidas por Claude 4.8 en el paso anterior.
