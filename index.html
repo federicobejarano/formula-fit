@@ -116,13 +116,24 @@
 
       <section id="loader" class="view hidden" aria-labelledby="loader-title" aria-live="polite">
         <div class="loader-panel">
-          <svg class="loader-mark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
-            <circle cx="60" cy="60" r="44" fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-dasharray="120 80"></circle>
-            <circle cx="60" cy="60" r="8" fill="currentColor"></circle>
-          </svg>
+          <div class="loader-orb" aria-hidden="true">
+            <svg class="loader-mark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" focusable="false">
+              <circle class="loader-ring loader-ring-outer" cx="80" cy="80" r="66"></circle>
+              <circle class="loader-ring loader-ring-middle" cx="80" cy="80" r="47"></circle>
+              <g class="loader-molecule">
+                <line class="loader-bond" x1="80" y1="45" x2="113" y2="95"></line>
+                <line class="loader-bond" x1="80" y1="45" x2="47" y2="95"></line>
+                <line class="loader-bond" x1="47" y1="95" x2="113" y2="95"></line>
+                <circle class="loader-node loader-node-one" cx="80" cy="45" r="7"></circle>
+                <circle class="loader-node loader-node-two" cx="47" cy="95" r="7"></circle>
+                <circle class="loader-node loader-node-three" cx="113" cy="95" r="7"></circle>
+                <path class="loader-core" d="M80 65 93 73v15L80 96 67 88V73z"></path>
+              </g>
+            </svg>
+          </div>
+          <p class="eyebrow">Formula Fit AI Lab</p>
           <h2 id="loader-title">Analizando metricas...</h2>
-          <p>Estamos ensamblando una formula alineada a tu perfil.</p>
-          <button type="button" class="button-primary" data-target="resultados">Ver resultados</button>
+          <p id="loader-detail">Estamos ensamblando una formula alineada a tu perfil.</p>
         </div>
       </section>
 

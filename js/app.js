@@ -10,6 +10,23 @@ let appState = {
 // Quiz wizard state
 let quizStep = 0;
 
+const LOADER_MESSAGES = [
+  {
+    title: "Analizando metricas...",
+    detail: "Leyendo objetivo, nivel y timing de entrenamiento."
+  },
+  {
+    title: "Formulando proporciones...",
+    detail: "Cruzando tu perfil con reglas de compatibilidad del stack."
+  },
+  {
+    title: "Ensamblando tu Stack...",
+    detail: "Preparando una recomendacion lista para revisar."
+  }
+];
+
+let loaderTimers = [];
+
 /**
  * Switches the active view in the SPA.
  * Removes .active and adds .hidden to all views, then sets .active on the target.
@@ -28,6 +45,45 @@ function navigateTo(viewId) {
     targetView.classList.remove('hidden');
     targetView.classList.add('active');
   }
+
+  if (viewId === 'loader') {
+    startLoaderSequence();
+  } else {
+    clearLoaderTimers();
+  }
+}
+
+/**
+ * Clears pending loader timers when the user leaves the loader view.
+ */
+function clearLoaderTimers() {
+  loaderTimers.forEach(timerId => clearTimeout(timerId));
+  loaderTimers = [];
+}
+
+/**
+ * Rotates loader messages and advances the happy path to results.
+ */
+function startLoaderSequence() {
+  clearLoaderTimers();
+
+  const title = document.getElementById('loader-title');
+  const detail = document.getElementById('loader-detail');
+
+  if (!title || !detail) {
+    return;
+  }
+
+  LOADER_MESSAGES.forEach((message, index) => {
+    const timerId = setTimeout(() => {
+      title.textContent = message.title;
+      detail.textContent = message.detail;
+    }, index * 800);
+
+    loaderTimers.push(timerId);
+  });
+
+  loaderTimers.push(setTimeout(() => navigateTo('resultados'), 2500));
 }
 
 /**
