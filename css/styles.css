@@ -1166,15 +1166,18 @@ button:disabled {
   display: grid;
   gap: var(--s2);
   width: 100%;
+  min-width: 0;
   margin: var(--s2) 0 var(--s3);
   padding: var(--s3);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   background-color: rgba(11, 15, 20, 0.36);
   text-align: left;
+  font-size: 0.75rem;
 }
 
 .tx-id-block {
+  min-width: 0;
   padding: var(--s2) var(--s3);
   border: 1px solid rgba(0, 229, 160, 0.28);
   border-radius: calc(var(--radius) - var(--s1));
@@ -1186,7 +1189,7 @@ button:disabled {
   display: block !important;
   color: var(--accent);
   font-family: var(--font-display);
-  font-size: var(--fs-caption);
+  font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -1195,21 +1198,29 @@ button:disabled {
 .confirmation-summary p {
   display: flex;
   justify-content: space-between;
-  gap: var(--s3);
+  align-items: baseline;
+  gap: var(--s2);
+  min-width: 0;
   margin: 0;
 }
 
 .confirmation-summary span {
+  flex: 0 0 auto;
   color: var(--text-low);
-  font-size: var(--fs-caption);
+  font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 
 .confirmation-summary strong {
+  flex: 1 1 auto;
+  min-width: 0;
   color: var(--text-hi);
+  font-size: 0.75rem;
   text-align: right;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 @keyframes success-draw {
@@ -1351,6 +1362,16 @@ button:disabled {
 
   .confirmation-summary {
     padding: var(--s2);
+    gap: var(--s1);
+    font-size: 0.7rem;
+  }
+
+  .confirmation-summary span {
+    font-size: 0.65rem;
+  }
+
+  .confirmation-summary strong {
+    font-size: 0.7rem;
   }
 
   .tx-id-block {
