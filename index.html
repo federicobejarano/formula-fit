@@ -159,40 +159,18 @@
 
           <article class="callout">
             <h3>Justificacion</h3>
-            <p id="stack-justification">Placeholder para explicar por que esta combinacion responde al perfil del atleta.</p>
+            <p id="stack-justification">Complete el Quiz para obtener sugerencias y promociones.</p>
           </article>
 
           <div class="dashboard-body">
             <div id="product-grid" class="product-grid" aria-label="Productos recomendados">
-              <article class="product-card">
-                <img src="productos/cmh.png" alt="Creatine Monohydrate">
-                <p class="product-category">Rendimiento y Fuerza</p>
-                <h3>Creatine Monohydrate</h3>
-                <p class="product-price">$24.99</p>
-                <button type="button" class="button-tertiary">Quitar</button>
-              </article>
-
-              <article class="product-card">
-                <img src="productos/wpc.png" alt="Whey Protein">
-                <p class="product-category">Proteinas y Aminoacidos</p>
-                <h3>Whey Protein</h3>
-                <p class="product-price">$39.99</p>
-                <button type="button" class="button-tertiary">Quitar</button>
-              </article>
-
-              <article class="product-card">
-                <img src="productos/nob.png" alt="Nitric Oxide Booster">
-                <p class="product-category">Rendimiento y Fuerza</p>
-                <h3>Nitric Oxide Booster</h3>
-                <p class="product-price">$32.99</p>
-                <button type="button" class="button-tertiary">Quitar</button>
-              </article>
+              <!-- Tarjetas renderizadas dinámicamente por app.js -->
             </div>
 
             <aside class="total-panel" aria-label="Resumen del stack">
               <p>Total estimado</p>
-              <strong id="stack-total">$97.97</strong>
-              <button type="button" id="add-stack-to-cart" class="button-primary">Anadir al Carrito</button>
+              <strong id="stack-total">$0.00</strong>
+              <button type="button" id="add-stack-to-cart" class="button-primary" disabled>Anadir al Carrito</button>
             </aside>
           </div>
         </div>
@@ -228,7 +206,7 @@
                 <span>Total</span>
                 <strong id="checkout-total">$0.00</strong>
               </div>
-              <button type="button" class="button-primary" data-open-confirmation>Confirmar Pedido</button>
+              <button type="button" id="confirm-order" class="button-primary" data-open-confirmation disabled>Confirmar Pedido</button>
             </aside>
           </div>
         </div>

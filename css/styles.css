@@ -880,6 +880,17 @@ button:disabled {
   gap: var(--s3);
 }
 
+.empty-state {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: var(--s4);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  background-color: rgba(21, 27, 35, 0.6);
+  color: var(--text-low);
+  text-align: center;
+}
+
 .product-card {
   display: grid;
   align-content: start;

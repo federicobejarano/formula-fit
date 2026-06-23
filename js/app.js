@@ -297,8 +297,69 @@ function renderStackTotal() {
   }
 }
 
+/**
+ * El boton "Anadir al Carrito" solo se habilita cuando hay productos cargados
+ * en Resultados. Sin Stack o con el Stack vacio (todo eliminado) permanece
+ * inactivo, con la estetica de boton deshabilitado y sin hover.
+ */
+function updateAddToCartButton() {
+  const button = document.getElementById('add-stack-to-cart');
+
+  if (!button) {
+    return;
+  }
+
+  const hasItems = Boolean(appState.stack && appState.stack.items.length > 0);
+  button.disabled = !hasItems;
+}
+
+/**
+ * El boton "Confirmar Pedido" solo se habilita cuando hay productos en el
+ * carrito. Mientras el carrito este vacio permanece inactivo, con la misma
+ * estetica de boton deshabilitado y sin hover.
+ */
+function updateConfirmOrderButton() {
+  const button = document.getElementById('confirm-order');
+
+  if (!button) {
+    return;
+  }
+
+  button.disabled = appState.carrito.length === 0;
+}
+
+function renderEmptyResults() {
+  const title = document.getElementById('resultados-title');
+  const justification = document.getElementById('stack-justification');
+  const profileChips = document.getElementById('profile-chips');
+  const productGrid = document.getElementById('product-grid');
+
+  if (title) {
+    title.textContent = 'Tu Stack personalizado';
+  }
+
+  if (justification) {
+    justification.textContent = '';
+  }
+
+  if (profileChips) {
+    profileChips.innerHTML = '';
+  }
+
+  if (productGrid) {
+    productGrid.innerHTML = '<p class="empty-state">Complete el Quiz para obtener sugerencias y promociones.</p>';
+  }
+
+  // Sin Stack el total estimado debe quedar en $0.
+  renderStackTotal();
+  updateAddToCartButton();
+}
+
 function renderResults() {
+  // Si el usuario no formuló su Stack (Quiz incompleto), no sugerimos
+  // productos ni mostramos un total precargado.
   if (!appState.stack) {
+    renderEmptyResults();
     return;
   }
 
@@ -316,6 +377,7 @@ function renderResults() {
   renderProfileChips();
   renderStackItems();
   renderStackTotal();
+  updateAddToCartButton();
 }
 
 function handleRemoveStackItem(e) {
@@ -329,6 +391,9 @@ function handleRemoveStackItem(e) {
   appState.carrito = [];
   renderStackItems();
   renderStackTotal();
+  updateAddToCartButton();
+  updateConfirmOrderButton();
+  updateCartBadge();
 }
 
 function updateCartBadge() {
@@ -341,7 +406,8 @@ function updateCartBadge() {
 }
 
 function addStackToCart() {
-  if (!appState.stack) {
+  // Solo se navega al Carrito si hay productos cargados en Resultados.
+  if (!appState.stack || appState.stack.items.length === 0) {
     return;
   }
 
@@ -354,31 +420,10 @@ function addStackToCart() {
   navigateTo('carrito');
 }
 
-function readStaticResultsItems() {
-  return Array.from(document.querySelectorAll('#resultados .product-card')).map(card => {
-    const img = card.querySelector('img');
-    const price = card.querySelector('.product-price')?.textContent.replace('$', '') || '0';
-
-    return {
-      id: img?.src.split('/').pop().replace('.png', '') || card.querySelector('h3').textContent,
-      nombre: card.querySelector('h3').textContent,
-      categoria: card.querySelector('.product-category')?.textContent || 'Stack personalizado',
-      precio: Number(price),
-      img: img?.getAttribute('src') || '',
-      cantidad: 1
-    };
-  });
-}
-
 function prepareCheckout() {
-  if (appState.carrito.length === 0) {
-    const stackItems = appState.stack?.items || readStaticResultsItems();
-    appState.carrito = stackItems.map(item => ({
-      ...item,
-      cantidad: item.cantidad || 1
-    }));
-  }
-
+  // El carrito NO se autocompleta al entrar a la vista: solo refleja lo que el
+  // usuario añadió explícitamente con "Añadir al Carrito" (addStackToCart).
+  // Mientras no se presione ese botón, el carrito permanece vacío.
   renderCheckout();
 }
 
@@ -392,6 +437,15 @@ function renderCheckout() {
   const total = document.getElementById('checkout-total');
 
   if (!cartLines || !subtotal || !total) {
+    return;
+  }
+
+  updateConfirmOrderButton();
+
+  if (appState.carrito.length === 0) {
+    cartLines.innerHTML = '<p class="empty-state">Tu carrito está vacío. Complete el Quiz y formule su Stack para añadir suplementos.</p>';
+    subtotal.textContent = formatCurrency(0);
+    total.textContent = formatCurrency(0);
     return;
   }
 
@@ -459,6 +513,11 @@ function construirPedido(state) {
 }
 
 function openConfirmation() {
+  // El modal de confirmacion solo se muestra con productos en el carrito.
+  if (appState.carrito.length === 0) {
+    return;
+  }
+
   appState.pedido = construirPedido(appState);
 
   const overlay = document.getElementById('confirmation-overlay');
