@@ -1,3 +1,5 @@
+# Consigna del Trabajo Práctico — E-Commerce con Registro y Clave
+
 El **objetivo principal** de la actividad es aplicar los conceptos abordados en la Unidad 2, centrándose específicamente en la **definición y uso de estructuras tipo registro**, la identificación y **diseño de una clave** para organizar datos, y la comprensión general del modelado de información aplicado a problemas reales [1]. 
 
 Para llevar esto a la práctica, la consigna exige **diseñar de manera individual el prototipo de una app de e-Commerce con la ayuda de una Inteligencia Artificial** de su preferencia (como ChatGPT, Gemini, Claude, entre otras) [2]. Este e-commerce debe salir de lo convencional y tradicional [2]. Para ello, se debe **elegir una temática creativa**, pudiendo optar por [3, 4]:

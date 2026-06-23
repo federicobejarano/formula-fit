@@ -1,3 +1,5 @@
+# Prompt 02 — Planificación del Plan de Codificación
+
 Basándote estrictamente en el alcance, las restricciones y el límite de tiempo de 2 horas definidos en el documento `arquitectura_tecnica.md`, genera un Plan de Acción de Codificación para construir el prototipo de E-commerce D2C.
 
 Tu objetivo principal es definir una hoja de ruta secuencial que garantice un prototipo frontend entregable y 100% funcional con datos simulados al finalizar.

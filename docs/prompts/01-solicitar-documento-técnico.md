@@ -1,3 +1,5 @@
+# Prompt 01 — Solicitud del Documento de Definición Técnica
+
 ### **Contexto**
 
 Debo crear una aplicación web de E-Commerce con lógica simulada (esto es, sin un backend ni base de datos reales) utilizando solamente HTML, CSS, JavaScript y JSON. La misma será el entregable de la consigna contenida en el documento @docs/consigna.md.

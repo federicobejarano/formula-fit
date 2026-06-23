@@ -1,3 +1,5 @@
+# El Paradigma D2C y el E-Commerce Hiper-Personalizado
+
 ### Conceptual Characteristics of Direct-to-Consumer (D2C) and Hyper-Personalized E-Commerce Models
 
 #### 1. The D2C Customer Relationship

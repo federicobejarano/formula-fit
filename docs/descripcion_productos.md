@@ -1,3 +1,5 @@
+# Catálogo de Suplementos y Reglas de Recomendación
+
 ### 1. Proteins & Amino Acids (Proteínas y Aminoácidos)
 
 Esta categoría es fundamental para la construcción y reparación muscular.

@@ -1,3 +1,5 @@
+# Buenas Prácticas de Diseño UX/UI para E-Commerce
+
 Here is a comprehensive, structured guide on UI design best practices for e-commerce websites, synthesized from the provided design documentation.
 
 ## 1. General Layout & Visual Hierarchy

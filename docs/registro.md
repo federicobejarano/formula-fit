@@ -1,3 +1,5 @@
+# Diseño del Registro Principal: PEDIDO_STACK
+
 ## Estructura generada por Gemini Pro
 ```plaintext
 AMBIENTE
