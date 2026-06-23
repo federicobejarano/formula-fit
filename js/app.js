@@ -318,6 +318,15 @@ function handleRemoveStackItem(e) {
   renderStackTotal();
 }
 
+function updateCartBadge() {
+  const badge = document.getElementById('cart-badge');
+  if (!badge) return;
+
+  const count = appState.carrito.reduce((sum, item) => sum + item.cantidad, 0);
+  badge.textContent = count;
+  badge.classList.toggle('hidden', count === 0);
+}
+
 function addStackToCart() {
   if (!appState.stack) {
     return;
@@ -328,6 +337,7 @@ function addStackToCart() {
     cantidad: 1
   }));
 
+  updateCartBadge();
   navigateTo('carrito');
 }
 

@@ -313,6 +313,26 @@ button:disabled {
   background-color: var(--bg-elevated);
 }
 
+.cart-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  margin-left: var(--s1);
+  border-radius: 999px;
+  background-color: var(--accent);
+  color: var(--bg-base);
+  font-size: var(--fs-caption);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.cart-badge.hidden {
+  display: none;
+}
+
 .simulation-badge {
   position: fixed;
   top: var(--s3);
