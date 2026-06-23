@@ -1141,6 +1141,24 @@ body.is-checkout #carrito {
   text-align: left;
 }
 
+.tx-id-block {
+  padding: var(--s2) var(--s3);
+  border: 1px solid rgba(0, 229, 160, 0.28);
+  border-radius: calc(var(--radius) - var(--s1));
+  background-color: rgba(0, 229, 160, 0.04);
+}
+
+.tx-id-label {
+  margin: 0 0 var(--s2) !important;
+  display: block !important;
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-size: var(--fs-caption);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
 .confirmation-summary p {
   display: flex;
   justify-content: space-between;

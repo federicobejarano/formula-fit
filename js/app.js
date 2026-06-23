@@ -458,14 +458,24 @@ function openConfirmation() {
                    + f.aa;
 
     summary.innerHTML = ''
+      + '<div class="tx-id-block">'
+      + '<p class="tx-id-label">ID_Transaccion</p>'
       + '<p><span>Fecha</span><strong>' + fechaStr + '</strong></p>'
       + '<p><span>Email</span><strong>' + tx.Email_Usuario + '</strong></p>'
       + '<p><span>Hash</span><strong>' + tx.Hash + '</strong></p>'
+      + '</div>'
       + '<p><span>Estado</span><strong>' + appState.pedido.Estado_Checkout + '</strong></p>'
       + '<p><span>Total</span><strong>' + formatCurrency(appState.pedido.Precio_Final) + '</strong></p>';
   }
 
-  overlay?.classList.remove('hidden');
+  if (overlay) {
+    overlay.classList.remove('hidden');
+    overlay.querySelectorAll('.success-check-circle, .success-check-path').forEach(el => {
+      el.style.animation = 'none';
+      el.offsetHeight;
+      el.style.animation = '';
+    });
+  }
 }
 
 function closeConfirmation() {
