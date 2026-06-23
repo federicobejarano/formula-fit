@@ -142,16 +142,18 @@
           <header class="stack-header">
             <p class="eyebrow">Stack sugerido</p>
             <h2 id="resultados-title">Stack Formula Fit</h2>
-            <p class="profile-chip">Objetivo del perfil</p>
+            <div id="profile-chips" class="profile-chips" aria-label="Perfil del atleta">
+              <span class="profile-chip">Objetivo del perfil</span>
+            </div>
           </header>
 
           <article class="callout">
             <h3>Justificacion</h3>
-            <p>Placeholder para explicar por que esta combinacion responde al perfil del atleta.</p>
+            <p id="stack-justification">Placeholder para explicar por que esta combinacion responde al perfil del atleta.</p>
           </article>
 
           <div class="dashboard-body">
-            <div class="product-grid" aria-label="Productos recomendados">
+            <div id="product-grid" class="product-grid" aria-label="Productos recomendados">
               <article class="product-card">
                 <img src="productos/cmh.png" alt="Creatine Monohydrate">
                 <p class="product-category">Rendimiento y Fuerza</p>
@@ -179,8 +181,8 @@
 
             <aside class="total-panel" aria-label="Resumen del stack">
               <p>Total estimado</p>
-              <strong>$97.97</strong>
-              <button type="button" class="button-primary" data-target="carrito">Anadir al Carrito</button>
+              <strong id="stack-total">$97.97</strong>
+              <button type="button" id="add-stack-to-cart" class="button-primary">Anadir al Carrito</button>
             </aside>
           </div>
         </div>

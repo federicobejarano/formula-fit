@@ -765,10 +765,17 @@ button:disabled {
   color: var(--accent);
 }
 
+.profile-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s2);
+  margin-top: var(--s2);
+}
+
 .profile-chip {
   display: inline-flex;
   width: fit-content;
-  margin: var(--s2) 0 0;
+  margin: 0;
   padding: var(--s1) var(--s3);
   border: 1px solid rgba(0, 229, 160, 0.38);
   border-radius: 999px;

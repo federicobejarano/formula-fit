@@ -31,6 +31,22 @@ function formatCurrency(value) {
   return `$${Number(value).toFixed(2)}`;
 }
 
+function getOptionLabel(key, value) {
+  return OPCIONES[key]?.find(option => option.val === value)?.label || value;
+}
+
+function recalculateStackTotal() {
+  if (!appState.stack) {
+    return 0;
+  }
+
+  appState.stack.total = +appState.stack.items
+    .reduce((total, item) => total + item.precio, 0)
+    .toFixed(2);
+
+  return appState.stack.total;
+}
+
 /**
  * Switches the active view in the SPA.
  * Removes .active and adds .hidden to all views, then sets .active on the target.
@@ -56,6 +72,10 @@ function navigateTo(viewId) {
     startLoaderSequence();
   } else {
     clearLoaderTimers();
+  }
+
+  if (viewId === 'resultados') {
+    renderResults();
   }
 
   if (viewId === 'carrito') {
@@ -155,8 +175,11 @@ function renderQuizStep() {
       card.classList.add('selected');
     }
 
+    const iconMarkup = opt.icon
+      ? `<span class="option-icon" aria-hidden="true">${opt.icon}</span>`
+      : '';
     card.innerHTML = `
-      <span class="option-icon" aria-hidden="true">${opt.icon}</span>
+      ${iconMarkup}
       <span class="option-label">${opt.label}</span>
     `;
 
@@ -208,8 +231,104 @@ function quizGoNext() {
     quizStep++;
     renderQuizStep();
   } else {
+    // Paso 4 (submit): el motor formula el Stack mientras el loader (V3)
+    // corre sus mensajes encadenados; al terminar se navega a resultados.
+    appState.stack = generarStack(appState.perfil);
     navigateTo('loader');
   }
+}
+
+function renderProfileChips() {
+  const profileChips = document.getElementById('profile-chips');
+
+  if (!profileChips) {
+    return;
+  }
+
+  const chips = [
+    { key: 'objetivo', value: appState.perfil.objetivo },
+    { key: 'nivel', value: appState.perfil.nivel },
+    { key: 'restriccion', value: appState.perfil.restriccion },
+    { key: 'horario', value: appState.perfil.horario }
+  ];
+
+  profileChips.innerHTML = chips
+    .filter(chip => chip.value)
+    .map(chip => `<span class="profile-chip">${getOptionLabel(chip.key, chip.value)}</span>`)
+    .join('');
+}
+
+function renderStackItems() {
+  const productGrid = document.getElementById('product-grid');
+
+  if (!productGrid || !appState.stack) {
+    return;
+  }
+
+  productGrid.innerHTML = appState.stack.items.map((item, index) => `
+    <article class="product-card">
+      <img src="${item.img}" alt="${item.nombre}">
+      <p class="product-category">${item.categoria}</p>
+      <h3>${item.nombre}</h3>
+      <p class="product-price">${formatCurrency(item.precio)}</p>
+      <button type="button" class="button-tertiary" data-remove-stack-item="${index}">Quitar</button>
+    </article>
+  `).join('');
+}
+
+function renderStackTotal() {
+  const total = document.getElementById('stack-total');
+
+  if (total) {
+    total.textContent = formatCurrency(recalculateStackTotal());
+  }
+}
+
+function renderResults() {
+  if (!appState.stack) {
+    return;
+  }
+
+  const title = document.getElementById('resultados-title');
+  const justification = document.getElementById('stack-justification');
+
+  if (title) {
+    title.textContent = appState.stack.nombre;
+  }
+
+  if (justification) {
+    justification.textContent = appState.stack.justificacion;
+  }
+
+  renderProfileChips();
+  renderStackItems();
+  renderStackTotal();
+}
+
+function handleRemoveStackItem(e) {
+  const button = e.target.closest('[data-remove-stack-item]');
+
+  if (!button || !appState.stack) {
+    return;
+  }
+
+  appState.stack.items.splice(Number(button.dataset.removeStackItem), 1);
+  appState.carrito = [];
+  renderStackItems();
+  renderStackTotal();
+}
+
+function addStackToCart() {
+  if (!appState.stack) {
+    return;
+  }
+
+  appState.carrito = appState.stack.items.map(item => ({
+    ...item,
+    cantidad: 1
+  }));
+
+  navigateTo('carrito');
 }
 
 function readStaticResultsItems() {
@@ -366,6 +485,8 @@ document.addEventListener('DOMContentLoaded', () => {
     button.addEventListener('click', () => navigateTo(button.dataset.target));
   });
 
+  document.getElementById('product-grid')?.addEventListener('click', handleRemoveStackItem);
+  document.getElementById('add-stack-to-cart')?.addEventListener('click', addStackToCart);
   document.getElementById('cart-lines')?.addEventListener('click', handleQuantityClick);
   document.querySelector('[data-open-confirmation]')?.addEventListener('click', openConfirmation);
   document.querySelector('[data-close-confirmation]')?.addEventListener('click', closeConfirmation);
