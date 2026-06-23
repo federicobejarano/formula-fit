@@ -455,10 +455,13 @@ function renderCheckout() {
       <div class="cart-line-info">
         <p class="product-category">${item.categoria}</p>
         <h3>${item.nombre}</h3>
-        <div class="quantity-stepper" aria-label="Cantidad de ${item.nombre}">
-          <button type="button" data-quantity-action="decrease" data-cart-index="${index}" aria-label="Restar unidad">-</button>
-          <span>${item.cantidad}</span>
-          <button type="button" data-quantity-action="increase" data-cart-index="${index}" aria-label="Sumar unidad">+</button>
+        <div class="cart-line-controls">
+          <div class="quantity-stepper" aria-label="Cantidad de ${item.nombre}">
+            <button type="button" data-quantity-action="decrease" data-cart-index="${index}" aria-label="Restar unidad">-</button>
+            <span>${item.cantidad}</span>
+            <button type="button" data-quantity-action="increase" data-cart-index="${index}" aria-label="Sumar unidad">+</button>
+          </div>
+          <button type="button" class="button-tertiary" data-remove-cart-item="${index}" aria-label="Quitar ${item.nombre} del carrito">Quitar</button>
         </div>
       </div>
       <strong>${formatCurrency(item.precio * item.cantidad)}</strong>
@@ -486,6 +489,23 @@ function handleQuantityClick(e) {
   } else if (item.cantidad > 1) {
     item.cantidad--;
   }
+
+  renderCheckout();
+  updateCartBadge();
+}
+
+/**
+ * Quita un producto del carrito de a uno por vez. Cada tarjeta del carrito
+ * expone su propio botón "Quitar"; al vaciarse todas las líneas, renderCheckout
+ * muestra el estado vacío y deshabilita "Confirmar Pedido".
+ */
+function handleRemoveCartItem(e) {
+  const button = e.target.closest('[data-remove-cart-item]');
+  if (!button) {
+    return;
+  }
+
+  appState.carrito.splice(Number(button.dataset.removeCartItem), 1);
 
   renderCheckout();
   updateCartBadge();
@@ -586,6 +606,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('product-grid')?.addEventListener('click', handleRemoveStackItem);
   document.getElementById('add-stack-to-cart')?.addEventListener('click', addStackToCart);
   document.getElementById('cart-lines')?.addEventListener('click', handleQuantityClick);
+  document.getElementById('cart-lines')?.addEventListener('click', handleRemoveCartItem);
   document.querySelector('[data-open-confirmation]')?.addEventListener('click', openConfirmation);
   document.querySelector('[data-close-confirmation]')?.addEventListener('click', closeConfirmation);
 

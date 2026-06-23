@@ -1072,6 +1072,17 @@ button:disabled {
   font-size: var(--fs-h4);
 }
 
+.cart-line-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s2);
+}
+
+.cart-line-controls .button-tertiary {
+  margin: 0;
+}
+
 .quantity-stepper {
   display: inline-flex;
   align-items: center;
