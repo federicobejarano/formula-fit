@@ -38,13 +38,22 @@
         <span>Formula Fit</span>
       </button>
 
-      <nav class="view-nav" aria-label="Accesos temporales del skeleton">
-        <button type="button" data-target="login">Login</button>
-        <button type="button" data-target="quiz">Quiz</button>
-        <button type="button" data-target="loader">Loader</button>
-        <button type="button" data-target="resultados">Resultados</button>
-        <button type="button" data-target="carrito">Carrito <span id="cart-badge" class="cart-badge hidden">0</span></button>
-      </nav>
+      <div class="header-right">
+        <nav class="view-nav hidden" aria-label="Navegacion principal">
+          <button type="button" data-target="quiz">Quiz</button>
+          <button type="button" data-target="resultados">Resultados</button>
+          <button type="button" data-target="carrito">Carrito <span id="cart-badge" class="cart-badge hidden">0</span></button>
+        </nav>
+
+        <div class="user-info hidden" id="user-info" aria-label="Usuario logueado">
+          <svg class="user-info-avatar" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+            <circle cx="20" cy="20" r="19" fill="none" stroke="var(--accent)" stroke-width="2"/>
+            <circle cx="20" cy="15" r="6" fill="var(--accent)"/>
+            <path d="M8 34c0-7 5-11 12-11s12 4 12 11" fill="var(--accent)" opacity="0.6"/>
+          </svg>
+          <span id="user-info-email" class="user-info-email"></span>
+        </div>
+      </div>
     </header>
 
     <main id="app" class="app-shell">
@@ -74,6 +83,7 @@
               </div>
             </div>
             <p>Ingresá para formular un stack personalizado según tu objetivo, nivel y rutina.</p>
+            <p class="login-hint">No necesitás registrarte. Esta página es una simulación: ingresá cualquier email y contraseña.</p>
 
             <form id="login-form" class="form-stack">
               <label for="email">Email</label>

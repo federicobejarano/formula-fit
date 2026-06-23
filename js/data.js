@@ -208,25 +208,38 @@ const CATALOGO = [
 ];
 
 // REGLAS: branding + justificación hardcodeada de Stack por combinación (objetivo + modificador).
+// Lookup en engine.js: objetivo|nivel → objetivo|horario → objetivo|_ → _default.
 const REGLAS = {
   "fuerza_potencia|avanzado": {
     nombre: "Stack Rendimiento Máximo",
-    justificacion: "Como atleta avanzado enfocado en fuerza, el óxido nítrico maximizará tu vasodilatación intra-entreno, mientras la creatina repondrá tus reservas de ATP."
+    justificacion: "Como atleta avanzado enfocado en fuerza, la creatina repondrá tus reservas de ATP entre series pesadas, mientras el óxido nítrico mejora la vasodilatación y el transporte de nutrientes al músculo durante el entreno. Una combinación probada para romper mesetas de rendimiento."
+  },
+  "fuerza_potencia|_": {
+    nombre: "Stack Fuerza Progresiva",
+    justificacion: "La creatina es el suplemento con mayor evidencia científica para mejorar la fuerza máxima y la potencia explosiva. La complementamos con soporte proteico adecuado para que la recuperación acompañe la intensidad de tus entrenamientos."
   },
   "recuperacion|noche": {
     nombre: "Stack Descanso Profundo",
-    justificacion: "Al entrenar de noche, el ZMA optimizará tu perfil hormonal y la relajación muscular durante el sueño."
+    justificacion: "Al entrenar de noche tu cuerpo entra en fase de reparación justo al dormir. El ZMA optimiza el perfil hormonal nocturno y la relajación muscular, mientras los aminoácidos aceleran la síntesis proteica durante las horas de sueño profundo."
+  },
+  "recuperacion|_": {
+    nombre: "Stack Recuperación Activa",
+    justificacion: "Después de entrenar, tu cuerpo necesita aminoácidos para reparar el tejido muscular y micronutrientes para combatir el estrés oxidativo del ejercicio. Esta selección apunta a reducir los tiempos de recuperación entre sesiones."
   },
   "hipertrofia|_": {
     nombre: "Stack Volumen Limpio",
-    justificacion: "Combinamos síntesis proteica sostenida con creatina para maximizar la ganancia de masa magra."
+    justificacion: "Para ganar masa magra necesitás un aporte proteico elevado y consistente. Combinamos proteína de alta biodisponibilidad con creatina, que aumenta la retención de agua intramuscular y potencia la fuerza en rangos de hipertrofia (8-12 reps)."
   },
   "longevidad|_": {
     nombre: "Stack Salud Base",
-    justificacion: "Una base de micronutrientes y omega-3 para soporte celular y antiinflamatorio a largo plazo."
+    justificacion: "Los omega-3 reducen marcadores inflamatorios sistémicos y protegen la salud cardiovascular, mientras que los micronutrientes esenciales cubren déficits comunes en dietas modernas. Una base sólida para optimizar tu salud a largo plazo."
+  },
+  "bienestar|_": {
+    nombre: "Stack Vitalidad Diaria",
+    justificacion: "Cubrimos micronutrientes clave que suelen faltar en la dieta, sumamos soporte antiinflamatorio con omega-3 y adaptógenos que ayudan a regular el estrés y mejorar la energía sostenida a lo largo del día."
   },
   "_default": {
     nombre: "Stack Equilibrio",
-    justificacion: "Una selección balanceada alineada a tus objetivos y rutina."
+    justificacion: "Seleccionamos suplementos complementarios que cubren tus necesidades de recuperación, micronutrientes y soporte general, adaptados a tu rutina y horario de entrenamiento."
   }
 };

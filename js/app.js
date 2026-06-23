@@ -66,8 +66,6 @@ function navigateTo(viewId) {
     targetView.classList.add('active');
   }
 
-  document.body.classList.toggle('is-checkout', viewId === 'carrito');
-
   if (viewId === 'loader') {
     startLoaderSequence();
   } else {
@@ -117,8 +115,22 @@ function startLoaderSequence() {
 }
 
 /**
+ * Displays the user avatar and email in the navbar.
+ * @param {string} email - The email to display.
+ */
+function showUserInfo(email) {
+  const userInfo = document.getElementById('user-info');
+  const userEmail = document.getElementById('user-info-email');
+
+  if (userInfo && userEmail) {
+    userEmail.textContent = email;
+    userInfo.classList.remove('hidden');
+  }
+}
+
+/**
  * Handles the login form submission.
- * Saves email to appState and optionally to localStorage, then navigates to quiz.
+ * Saves email to appState, then navigates to quiz.
  * @param {Event} e - The submit event.
  */
 function handleLoginSubmit(e) {
@@ -128,7 +140,8 @@ function handleLoginSubmit(e) {
 
   appState.usuario = { email };
 
-  localStorage.setItem('formulafit_email', email);
+  showUserInfo(email);
+  document.querySelector('.view-nav')?.classList.remove('hidden');
 
   quizStep = 0;
   appState.perfil = {};
@@ -487,14 +500,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const loginForm = document.getElementById('login-form');
   if (loginForm) {
     loginForm.addEventListener('submit', handleLoginSubmit);
-  }
-
-  const savedEmail = localStorage.getItem('formulafit_email');
-  if (savedEmail) {
-    const emailInput = document.getElementById('email');
-    if (emailInput) {
-      emailInput.value = savedEmail;
-    }
   }
 
   const btnBack = document.getElementById('quiz-btn-back');
