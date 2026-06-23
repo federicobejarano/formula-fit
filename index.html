@@ -138,7 +138,7 @@
       </section>
 
       <section id="resultados" class="view hidden" aria-labelledby="resultados-title">
-        <div class="view-container">
+        <div class="view-container results-container">
           <header class="stack-header">
             <p class="eyebrow">Stack sugerido</p>
             <h2 id="resultados-title">Stack Formula Fit</h2>
@@ -150,21 +150,39 @@
             <p>Placeholder para explicar por que esta combinacion responde al perfil del atleta.</p>
           </article>
 
-          <div class="product-grid" aria-label="Productos recomendados">
-            <article class="product-card">
-              <img src="productos/cmh.png" alt="Creatine Monohydrate">
-              <h3>Creatine Monohydrate</h3>
-              <p>Rendimiento y Fuerza</p>
-              <p>$24.99</p>
-              <button type="button" class="button-tertiary">Quitar</button>
-            </article>
-          </div>
+          <div class="dashboard-body">
+            <div class="product-grid" aria-label="Productos recomendados">
+              <article class="product-card">
+                <img src="productos/cmh.png" alt="Creatine Monohydrate">
+                <p class="product-category">Rendimiento y Fuerza</p>
+                <h3>Creatine Monohydrate</h3>
+                <p class="product-price">$24.99</p>
+                <button type="button" class="button-tertiary">Quitar</button>
+              </article>
 
-          <aside class="total-panel" aria-label="Resumen del stack">
-            <p>Total estimado</p>
-            <strong>$24.99</strong>
-            <button type="button" class="button-primary" data-target="carrito">Anadir al Carrito</button>
-          </aside>
+              <article class="product-card">
+                <img src="productos/wpc.png" alt="Whey Protein">
+                <p class="product-category">Proteinas y Aminoacidos</p>
+                <h3>Whey Protein</h3>
+                <p class="product-price">$39.99</p>
+                <button type="button" class="button-tertiary">Quitar</button>
+              </article>
+
+              <article class="product-card">
+                <img src="productos/nob.png" alt="Nitric Oxide Booster">
+                <p class="product-category">Rendimiento y Fuerza</p>
+                <h3>Nitric Oxide Booster</h3>
+                <p class="product-price">$32.99</p>
+                <button type="button" class="button-tertiary">Quitar</button>
+              </article>
+            </div>
+
+            <aside class="total-panel" aria-label="Resumen del stack">
+              <p>Total estimado</p>
+              <strong>$97.97</strong>
+              <button type="button" class="button-primary" data-target="carrito">Anadir al Carrito</button>
+            </aside>
+          </div>
         </div>
       </section>
 

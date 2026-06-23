@@ -227,5 +227,9 @@ document.addEventListener('DOMContentLoaded', () => {
     btnNext.addEventListener('click', quizGoNext);
   }
 
+  document.querySelectorAll('button[data-target]:not([type="submit"])').forEach(button => {
+    button.addEventListener('click', () => navigateTo(button.dataset.target));
+  });
+
   renderQuizStep();
 });
