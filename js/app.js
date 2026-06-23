@@ -27,6 +27,10 @@ const LOADER_MESSAGES = [
 
 let loaderTimers = [];
 
+function formatCurrency(value) {
+  return `$${Number(value).toFixed(2)}`;
+}
+
 /**
  * Switches the active view in the SPA.
  * Removes .active and adds .hidden to all views, then sets .active on the target.
@@ -46,10 +50,16 @@ function navigateTo(viewId) {
     targetView.classList.add('active');
   }
 
+  document.body.classList.toggle('is-checkout', viewId === 'carrito');
+
   if (viewId === 'loader') {
     startLoaderSequence();
   } else {
     clearLoaderTimers();
+  }
+
+  if (viewId === 'carrito') {
+    prepareCheckout();
   }
 }
 
@@ -202,6 +212,131 @@ function quizGoNext() {
   }
 }
 
+function readStaticResultsItems() {
+  return Array.from(document.querySelectorAll('#resultados .product-card')).map(card => {
+    const img = card.querySelector('img');
+    const price = card.querySelector('.product-price')?.textContent.replace('$', '') || '0';
+
+    return {
+      id: img?.src.split('/').pop().replace('.png', '') || card.querySelector('h3').textContent,
+      nombre: card.querySelector('h3').textContent,
+      categoria: card.querySelector('.product-category')?.textContent || 'Stack personalizado',
+      precio: Number(price),
+      img: img?.getAttribute('src') || '',
+      cantidad: 1
+    };
+  });
+}
+
+function prepareCheckout() {
+  if (appState.carrito.length === 0) {
+    const stackItems = appState.stack?.items || readStaticResultsItems();
+    appState.carrito = stackItems.map(item => ({
+      ...item,
+      cantidad: item.cantidad || 1
+    }));
+  }
+
+  renderCheckout();
+}
+
+function calculateCartTotal() {
+  return appState.carrito.reduce((total, item) => total + (item.precio * item.cantidad), 0);
+}
+
+function renderCheckout() {
+  const cartLines = document.getElementById('cart-lines');
+  const subtotal = document.getElementById('checkout-subtotal');
+  const total = document.getElementById('checkout-total');
+
+  if (!cartLines || !subtotal || !total) {
+    return;
+  }
+
+  cartLines.innerHTML = appState.carrito.map((item, index) => `
+    <article class="cart-line">
+      <img src="${item.img}" alt="${item.nombre}">
+      <div class="cart-line-info">
+        <p class="product-category">${item.categoria}</p>
+        <h3>${item.nombre}</h3>
+        <div class="quantity-stepper" aria-label="Cantidad de ${item.nombre}">
+          <button type="button" data-quantity-action="decrease" data-cart-index="${index}" aria-label="Restar unidad">-</button>
+          <span>${item.cantidad}</span>
+          <button type="button" data-quantity-action="increase" data-cart-index="${index}" aria-label="Sumar unidad">+</button>
+        </div>
+      </div>
+      <strong>${formatCurrency(item.precio * item.cantidad)}</strong>
+    </article>
+  `).join('');
+
+  const cartTotal = calculateCartTotal();
+  subtotal.textContent = formatCurrency(cartTotal);
+  total.textContent = formatCurrency(cartTotal);
+}
+
+function handleQuantityClick(e) {
+  const button = e.target.closest('[data-quantity-action]');
+  if (!button) {
+    return;
+  }
+
+  const item = appState.carrito[Number(button.dataset.cartIndex)];
+  if (!item) {
+    return;
+  }
+
+  if (button.dataset.quantityAction === 'increase') {
+    item.cantidad++;
+  } else if (item.cantidad > 1) {
+    item.cantidad--;
+  }
+
+  renderCheckout();
+}
+
+function construirPedido() {
+  const hoy = new Date();
+  const total = calculateCartTotal();
+
+  return {
+    ID_Transaccion: {
+      Fecha: { aa: hoy.getFullYear(), mm: hoy.getMonth() + 1, dd: hoy.getDate() },
+      Email_Usuario: appState.usuario?.email || 'demo@formulafit.local',
+      Hash: `FF-${Date.now().toString(36).toUpperCase()}`
+    },
+    Perfil_Atleta: {
+      Objetivo: appState.perfil.objetivo,
+      Nivel: appState.perfil.nivel,
+      Restriccion: appState.perfil.restriccion,
+      Hora_Entrenamiento: appState.perfil.horario
+    },
+    Precio_Final: Number(total.toFixed(2)),
+    Estado_Checkout: 'Pagado'
+  };
+}
+
+function openConfirmation() {
+  appState.pedido = construirPedido();
+
+  const overlay = document.getElementById('confirmation-overlay');
+  const summary = document.getElementById('confirmation-summary');
+
+  if (summary) {
+    const tx = appState.pedido.ID_Transaccion;
+    summary.innerHTML = `
+      <p><span>ID Transaccion</span><strong>${tx.Hash}</strong></p>
+      <p><span>Email</span><strong>${tx.Email_Usuario}</strong></p>
+      <p><span>Total</span><strong>${formatCurrency(appState.pedido.Precio_Final)}</strong></p>
+    `;
+  }
+
+  overlay?.classList.remove('hidden');
+}
+
+function closeConfirmation() {
+  document.getElementById('confirmation-overlay')?.classList.add('hidden');
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   const loginForm = document.getElementById('login-form');
   if (loginForm) {
@@ -230,6 +365,10 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('button[data-target]:not([type="submit"])').forEach(button => {
     button.addEventListener('click', () => navigateTo(button.dataset.target));
   });
+
+  document.getElementById('cart-lines')?.addEventListener('click', handleQuantityClick);
+  document.querySelector('[data-open-confirmation]')?.addEventListener('click', openConfirmation);
+  document.querySelector('[data-close-confirmation]')?.addEventListener('click', closeConfirmation);
 
   renderQuizStep();
 });

@@ -188,25 +188,37 @@
 
       <section id="carrito" class="view hidden" aria-labelledby="carrito-title">
         <div class="view-container checkout-container">
-          <h2 id="carrito-title">Checkout</h2>
-          <p>Revisa tu stack personalizado antes de confirmar el pedido simulado.</p>
+          <header class="checkout-header">
+            <p class="eyebrow">Checkout protegido</p>
+            <h2 id="carrito-title">Confirmá tu Stack</h2>
+            <p>Revisá las líneas del carrito antes de cerrar el pedido simulado.</p>
+          </header>
 
-          <div class="cart-lines" aria-label="Lineas del carrito">
-            <article class="cart-line">
-              <img src="productos/cmh.png" alt="Creatine Monohydrate">
-              <div>
-                <h3>Creatine Monohydrate</h3>
-                <p>Cantidad: 1</p>
+          <div class="checkout-layout">
+            <div>
+              <p class="checkout-section-label">Productos seleccionados</p>
+              <div id="cart-lines" class="cart-lines" aria-label="Lineas del carrito">
+                <!-- Lineas renderizadas dinámicamente por app.js -->
               </div>
-              <strong>$24.99</strong>
-            </article>
-          </div>
+            </div>
 
-          <aside class="checkout-summary">
-            <p>Subtotal: $24.99</p>
-            <p>Total: $24.99</p>
-            <button type="button" class="button-primary" data-open-confirmation>Confirmar Pedido</button>
-          </aside>
+            <aside class="checkout-summary" aria-label="Resumen del pedido">
+              <h3>Resumen</h3>
+              <div class="summary-row">
+                <span>Subtotal</span>
+                <strong id="checkout-subtotal">$0.00</strong>
+              </div>
+              <div class="summary-row">
+                <span>Envío</span>
+                <strong>Modo simulación</strong>
+              </div>
+              <div class="summary-row summary-total">
+                <span>Total</span>
+                <strong id="checkout-total">$0.00</strong>
+              </div>
+              <button type="button" class="button-primary" data-open-confirmation>Confirmar Pedido</button>
+            </aside>
+          </div>
         </div>
       </section>
     </main>
@@ -214,11 +226,14 @@
     <div id="confirmation-overlay" class="confirmation-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="confirmation-title">
       <div class="confirmation-modal">
         <svg class="success-check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
-          <circle cx="60" cy="60" r="48" fill="none" stroke="currentColor" stroke-width="8"></circle>
-          <path d="M34 62 L52 80 L88 40" fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"></path>
+          <circle class="success-check-circle" cx="60" cy="60" r="48" fill="none" stroke="currentColor" stroke-width="8"></circle>
+          <path class="success-check-path" d="M34 62 L52 80 L88 40" fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"></path>
         </svg>
         <h2 id="confirmation-title">Pedido confirmado</h2>
-        <p>Modo Simulacion. Tu Pedido_Stack_Personalizado queda listo para render dinamico en fases posteriores.</p>
+        <p>Modo Simulacion. Tu Pedido_Stack_Personalizado quedo registrado como pagado.</p>
+        <div id="confirmation-summary" class="confirmation-summary" aria-label="Resumen de confirmacion">
+          <!-- Resumen renderizado dinámicamente por app.js -->
+        </div>
         <button type="button" class="button-tertiary" data-close-confirmation>Cerrar</button>
       </div>
     </div>
