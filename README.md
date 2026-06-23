@@ -27,7 +27,7 @@ Toda la aplicación opera en **Modo Simulación**: no se realizan transacciones 
 
 ## El registro principal y su clave
 
-El corazón técnico del trabajo es el **registro principal** `PEDIDO_STACK`. Su clave, `ID_Transaccion`, es **compleja** (un campo continente formado por `Fecha + Email_Usuario + Hash`) y a la vez **primaria** (identifica de forma única al pedido): ningún campo aislado garantiza unicidad, por lo que la clave debe ser compuesta. El diseño y su justificación completa están en [`docs/registro.md`](docs/registro.md), fundamentados en la teoría de [`docs/tema_registros.md`](docs/tema_registros.md).
+El corazón técnico del trabajo es el **registro principal** `PEDIDO_STACK`. Su clave, `ID_Transaccion`, es **compleja** (un campo continente formado por `Fecha + Email_Usuario + Hash`) y a la vez **primaria** (identifica de forma única al pedido): ningún campo aislado garantiza unicidad, por lo que la clave debe ser compuesta. 
 
 ## Documentación
 
@@ -39,8 +39,6 @@ Toda la documentación que guió el diseño, la planificación y el desarrollo v
 |---|---|
 | [`docs/consigna.md`](docs/consigna.md) | **Consigna del trabajo práctico.** Define el objetivo académico (aplicar registros y claves de la Unidad 2) y los requisitos de entrega. Fue el punto de partida que delimitó el alcance del proyecto. |
 | [`docs/d2c_paradigm.md`](docs/d2c_paradigm.md) | **El paradigma D2C e hiper-personalización.** Base conceptual del modelo de negocio elegido (relación directa, lógica input→output, carrito autónomo). Fundamentó *por qué* Formula Fit funciona como un "laboratorio" que formula stacks. |
-| [`docs/tema_registros.md`](docs/tema_registros.md) | **Marco teórico de registros y claves.** Síntesis de la teoría de cátedra (heterogeneidad, campos contenidos/continentes, tipos de clave). Sirvió para diseñar y justificar el registro principal con rigor. |
-
 ### Diseño del producto y los datos
 
 | Documento | Descripción y aporte al proceso |
@@ -61,6 +59,20 @@ La interacción con la IA se organizó en una cadena de tres prompts reutilizabl
 | [`docs/prompts/planificacion.md`](docs/prompts/planificacion.md) | **Prompt de planificación.** Sobre la base de la arquitectura y el timebox de 2 horas, pidió una secuencia de actividades de codificación por fases, etiquetadas por complejidad. |
 | [`docs/prompts/ejecucion_actividad.md`](docs/prompts/ejecucion_actividad.md) | **Prompt genérico de ejecución.** Reutilizable para cada actividad del plan: implementa solo esa parte respetando el alcance y los patrones ya definidos. |
 
-## Reflexión sobre el uso de IA
+## Modelos de IA Utilizados
 
-La IA fue valiosa mucho más allá de "escribir código". Se usó primero para **procesar y ordenar información** (buenas prácticas de UX/UI, el modelo D2C, la teoría de registros), lo que permitió decidir con fundamento. Recién después se usó para codificar, organizándola en etapas en lugar de pedirle todo de una vez. Lo más interesante fue ver que la IA modela muy bien las ideas conceptuales —como la estructura de datos del negocio— pero todavía necesita que el estudiante revise los detalles técnicos y la notación exacta de la materia. En definitiva, la IA potencia el aprendizaje, pero no reemplaza el criterio.
+**1. Definición de la Idea a Desarrollar**
+- Ejecuté un [`docs/prompts/00-gemini.md`](prompt inicial) en **Gemini 3.1 Pro** solicitando palabras clave (en idioma inglés) relacionadas a **E-Commerce** con el objetivo de conocer en qué consiste la innovación en este contexo, además de algunos casos de éxito reales.
+- Buscando las palabras claves sugeridas por Gemini, recopilé 17 artículos que abordan el tema "innovación en E-Commerce" desde diversas perspectivas. Estos artículos fueron procesados con **NotebookLM** para obtener un resumen que incluya "tipos de innovación en e-commerce" y "casos de éxito conocidos". En base a este resumen, busqué un tipo de innovación que se ajustara a la características de la aplicación final: un **sitio web con lógica y datos simulados**.
+- Una vez identificado el tipo de innovación **D2C (Direct-to-Consumer) hiper-personalizado** como apropiado para la consigna, apliqué el modelo a mi situación personal actual: la de buscar suplementos deportivos acordes a mis necesidades y objetivos físicos.
+
+**2. Refinamiento de la Solución**
+- El primer obstáculo fue que no sabía cómo un sitio web simulado resolvería sugerencias de paquetes de productos en base a elecciones del usuario. Para ello, [`docs/prompts/solicitar_logica_sugerencias.md`](ejecuté un prompt) en **Gemini 3.1 Pro** solicitando elaborar un documento descriptivo de cómo un sitio web con flujos y datos simulados proporcionaría diversas opciones según los datos ingresados.
+- Basándome en esta [`docs/logica_de_sugerencias.md`](solución generada por Gemini), solicité al mismo modelo la definición de la **[`docs/registro.md`](estructura principal)** de tipo Registro, con su camplo Clave continente. Luego adapté la solución propuesta por Gemini para ajustarlo a las convenciones de Cátedra.
+- Luego, utilicé Cursor para solicitar la definición de los **[`docs/arquitectura_tecnica.md`](requerimientos técnicos)** utilizando el modelo **Claude Opus 4.8**. Para ello me basé en:
+    - La lógica de sugerencias generada por Gemini
+    - Las [`docs/uxui_best_practices.md`](buenas prácticas) de diseño UX/UI para E-commerce, documento generado con **NotebookLM** utilizando bibliografía autorizada de diseño UX/UI 
+
+**3. Planificación y Ejecución**
+- Basándome en la definición técnica generada por Claude 4.8, solicité al mismo modelo la generación del plan de desarrollo mediante el [`docs/prompts/planificacion.md`](prompt correspondiente)
+- Por último, utilicé un [`docs/prompts/ejecucion_actividad.md`](prompt genérico) para la ejecución de las actividades de desarrollo definidas por Claude 4.8 en el paso anterior.
