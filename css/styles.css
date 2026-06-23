@@ -350,6 +350,10 @@ button:disabled {
   display: none;
 }
 
+.view-nav.hidden {
+  display: none;
+}
+
 .user-info-avatar {
   width: 32px;
   height: 32px;
