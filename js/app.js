@@ -553,6 +553,13 @@ function openConfirmation() {
 
 function closeConfirmation() {
   document.getElementById('confirmation-overlay')?.classList.add('hidden');
+
+  // El pedido ya quedó registrado en appState.pedido, así que vaciamos el
+  // carrito y refrescamos la vista de checkout y el badge para reflejar el
+  // estado posterior a la confirmación.
+  appState.carrito = [];
+  renderCheckout();
+  updateCartBadge();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
