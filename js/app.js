@@ -423,21 +423,21 @@ function handleQuantityClick(e) {
   renderCheckout();
 }
 
-function construirPedido() {
+function construirPedido(state) {
   const hoy = new Date();
   const total = calculateCartTotal();
 
   return {
     ID_Transaccion: {
       Fecha: { aa: hoy.getFullYear(), mm: hoy.getMonth() + 1, dd: hoy.getDate() },
-      Email_Usuario: appState.usuario?.email || 'demo@formulafit.local',
-      Hash: `FF-${Date.now().toString(36).toUpperCase()}`
+      Email_Usuario: state.usuario?.email || 'demo@formulafit.local',
+      Hash: 'FF-' + Date.now().toString(36).toUpperCase()
     },
     Perfil_Atleta: {
-      Objetivo: appState.perfil.objetivo,
-      Nivel: appState.perfil.nivel,
-      Restriccion: appState.perfil.restriccion,
-      Hora_Entrenamiento: appState.perfil.horario
+      Objetivo: state.perfil.objetivo,
+      Nivel: state.perfil.nivel,
+      Restriccion: state.perfil.restriccion,
+      Hora_Entrenamiento: state.perfil.horario
     },
     Precio_Final: Number(total.toFixed(2)),
     Estado_Checkout: 'Pagado'
@@ -445,18 +445,24 @@ function construirPedido() {
 }
 
 function openConfirmation() {
-  appState.pedido = construirPedido();
+  appState.pedido = construirPedido(appState);
 
   const overlay = document.getElementById('confirmation-overlay');
   const summary = document.getElementById('confirmation-summary');
 
   if (summary) {
     const tx = appState.pedido.ID_Transaccion;
-    summary.innerHTML = `
-      <p><span>ID Transaccion</span><strong>${tx.Hash}</strong></p>
-      <p><span>Email</span><strong>${tx.Email_Usuario}</strong></p>
-      <p><span>Total</span><strong>${formatCurrency(appState.pedido.Precio_Final)}</strong></p>
-    `;
+    const f = tx.Fecha;
+    const fechaStr = String(f.dd).padStart(2, '0') + '/'
+                   + String(f.mm).padStart(2, '0') + '/'
+                   + f.aa;
+
+    summary.innerHTML = ''
+      + '<p><span>Fecha</span><strong>' + fechaStr + '</strong></p>'
+      + '<p><span>Email</span><strong>' + tx.Email_Usuario + '</strong></p>'
+      + '<p><span>Hash</span><strong>' + tx.Hash + '</strong></p>'
+      + '<p><span>Estado</span><strong>' + appState.pedido.Estado_Checkout + '</strong></p>'
+      + '<p><span>Total</span><strong>' + formatCurrency(appState.pedido.Precio_Final) + '</strong></p>';
   }
 
   overlay?.classList.remove('hidden');
