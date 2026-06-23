@@ -421,6 +421,7 @@ function handleQuantityClick(e) {
   }
 
   renderCheckout();
+  updateCartBadge();
 }
 
 function construirPedido(state) {

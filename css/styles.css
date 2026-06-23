@@ -1294,4 +1294,16 @@ body.is-checkout #carrito {
   .checkout-summary {
     position: static;
   }
+
+  .confirmation-modal {
+    padding: var(--s4);
+  }
+
+  .confirmation-summary {
+    padding: var(--s2);
+  }
+
+  .tx-id-block {
+    padding: var(--s2);
+  }
 }

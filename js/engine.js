@@ -40,8 +40,9 @@ function generarStack(perfil) {
     .slice(0, 4);
 
   // (D) Branding + total.
-  const clave = `${perfil.objetivo}|${perfil.nivel}`;
-  const meta = REGLAS[clave]
+  // Lookup: objetivo|nivel → objetivo|horario → objetivo|_ → _default.
+  const meta = REGLAS[`${perfil.objetivo}|${perfil.nivel}`]
+    || REGLAS[`${perfil.objetivo}|${perfil.horario}`]
     || REGLAS[`${perfil.objetivo}|_`]
     || REGLAS["_default"];
 
